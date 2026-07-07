@@ -1,6 +1,7 @@
 import {
   Building2,
   ChevronDown,
+  Filter,
   FilterX,
   MapPin,
   Plane,
@@ -74,6 +75,7 @@ export function App() {
   const [query, setQuery] = useState("");
   const [filters, setFilters] = useState<Record<FilterKey, string>>(emptyFilters);
   const [selected, setSelected] = useState<Lounge | null>(null);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   useEffect(() => {
     let alive = true;
@@ -131,6 +133,8 @@ export function App() {
     setFilters(emptyFilters);
   }
 
+  const filterOnlyCount = Object.values(filters).filter(Boolean).length;
+
   return (
     <main className="app-shell">
       <section className="topbar">
@@ -146,31 +150,46 @@ export function App() {
       </section>
 
       <section className="search-panel" aria-label="查询条件">
-        <label className="search-box">
-          <Search aria-hidden="true" size={22} />
-          <input
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="搜索城市、机场、三字码、贵宾厅名称或位置指引"
-            autoComplete="off"
-          />
-        </label>
+        <div className="search-row">
+          <label className="search-box">
+            <Search aria-hidden="true" size={22} />
+            <input
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="搜索城市、机场、三字码、贵宾厅名称或位置指引"
+              autoComplete="off"
+            />
+          </label>
+          <button
+            type="button"
+            className={`filter-toggle ${filtersOpen ? "open" : ""}`}
+            onClick={() => setFiltersOpen((v) => !v)}
+            aria-expanded={filtersOpen}
+          >
+            <Filter aria-hidden="true" size={17} />
+            筛选
+            {filterOnlyCount > 0 && <span className="filter-badge">{filterOnlyCount}</span>}
+            <ChevronDown aria-hidden="true" size={15} className="toggle-chevron" />
+          </button>
+        </div>
 
-        <div className="filters">
-          {(Object.keys(filterLabels) as FilterKey[]).map((key) => (
-            <label className="select-wrap" key={key}>
-              <span>{filterLabels[key]}</span>
-              <select value={filters[key]} onChange={(event) => updateFilter(key, event.target.value)}>
-                <option value="">全部</option>
-                {options[key].map((value) => (
-                  <option value={value} key={value}>
-                    {value}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown aria-hidden="true" size={16} />
-            </label>
-          ))}
+        <div className={`filters-collapsible ${filtersOpen ? "open" : ""}`}>
+          <div className="filters">
+            {(Object.keys(filterLabels) as FilterKey[]).map((key) => (
+              <label className="select-wrap" key={key}>
+                <span>{filterLabels[key]}</span>
+                <select value={filters[key]} onChange={(event) => updateFilter(key, event.target.value)}>
+                  <option value="">全部</option>
+                  {options[key].map((value) => (
+                    <option value={value} key={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown aria-hidden="true" size={16} />
+              </label>
+            ))}
+          </div>
         </div>
 
         <div className="result-meta">

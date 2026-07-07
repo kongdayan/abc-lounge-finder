@@ -86,8 +86,15 @@ h1 {
   box-shadow: 0 16px 42px rgba(37, 47, 42, 0.08);
 }
 
+.search-row {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
 .search-box {
   display: flex;
+  flex: 1;
   align-items: center;
   gap: 10px;
   min-height: 56px;
@@ -95,6 +102,14 @@ h1 {
   border-radius: 8px;
   padding: 0 15px;
   background: #fbfcfa;
+}
+
+.filter-toggle {
+  display: none;
+}
+
+.filters-collapsible {
+  display: contents;
 }
 
 .search-box svg {
@@ -383,8 +398,68 @@ mark {
     justify-content: flex-start;
   }
 
-  .filters {
-    grid-template-columns: 1fr;
+  /* Mobile: show the toggle button */
+  .filter-toggle {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 6px;
+    height: 56px;
+    padding: 0 14px;
+    border: 1px solid #bfcac3;
+    border-radius: 8px;
+    background: #fbfcfa;
+    color: #1b2a24;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .filter-toggle.open {
+    border-color: #2f7051;
+    background: #f0f8f2;
+    color: #2f7051;
+  }
+
+  .filter-toggle .toggle-chevron {
+    transition: transform 0.2s ease;
+  }
+
+  .filter-toggle.open .toggle-chevron {
+    transform: rotate(180deg);
+  }
+
+  .filter-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #2f7051;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  /* Mobile: collapsible filters panel */
+  .filters-collapsible {
+    display: block;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+  }
+
+  .filters-collapsible.open {
+    max-height: 800px;
+  }
+
+  .filters-collapsible .filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 12px;
   }
 
   .result-card {
