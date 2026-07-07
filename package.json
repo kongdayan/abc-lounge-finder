@@ -4,6 +4,14 @@
   "private": false,
   "description": "农业银行境外机场贵宾厅快速查询网站",
   "license": "MIT",
+  "homepage": "https://abc-lounge.anserlabs.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kongdayan/abc-lounge-finder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kongdayan/abc-lounge-finder/issues"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
