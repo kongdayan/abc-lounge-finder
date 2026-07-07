@@ -1,0 +1,27 @@
+{
+  "name": "abc-lounge-finder",
+  "version": "1.0.0",
+  "private": false,
+  "description": "农业银行境外机场贵宾厅快速查询网站",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name abc-lounge-finder"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.0.0",
+    "vite": "^7.0.0",
+    "typescript": "^5.8.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "lucide-react": "^0.468.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "wrangler": "^4.0.0"
+  }
+}
