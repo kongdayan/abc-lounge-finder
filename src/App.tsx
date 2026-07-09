@@ -113,7 +113,12 @@ export function App() {
   const options = useMemo(() => {
     return (Object.keys(filters) as FilterKey[]).reduce(
       (acc, key) => {
-        acc[key] = getOptions(key, lounges);
+        const source = lounges.filter((item) =>
+          (Object.keys(filters) as FilterKey[])
+            .filter((k) => k !== key)
+            .every((k) => matchesFilter(item, k, filters[k])),
+        );
+        acc[key] = getOptions(key, source);
         return acc;
       },
       {} as Record<FilterKey, string[]>,
@@ -125,7 +130,12 @@ export function App() {
   const cities = new Set(lounges.map((item) => item.city)).size;
 
   function updateFilter(key: FilterKey, value: string) {
-    setFilters((current) => ({ ...current, [key]: value }));
+    setFilters((current) => {
+      const next = { ...current, [key]: value };
+      if (key === "continent") { next.country = ""; next.city = ""; }
+      else if (key === "country") { next.city = ""; }
+      return next;
+    });
   }
 
   function clearAll() {
